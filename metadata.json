@@ -1,0 +1,6 @@
+{
+  "name": "CodeCraft",
+  "description": "An AI-powered game prototyping and development tool where users can describe a game in natural language and have a complete, playable HTML5 game generated instantly.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
