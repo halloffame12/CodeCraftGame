@@ -31,7 +31,7 @@ const GamePreview: React.FC<GamePreviewProps> = ({ gameCode }) => {
   }, [gameCode]);
 
   return (
-    <div className="w-full h-full bg-gray-950 flex flex-col">
+    <div className="w-full h-full bg-gray-950 flex flex-col min-h-[50vh] md:min-h-0">
       {gameCode ? (
         <iframe
           srcDoc={srcDoc}

@@ -19,7 +19,7 @@ const examplePrompts = [
 
 const PromptPanel: React.FC<PromptPanelProps> = ({ prompt, setPrompt, onGenerate, isLoading }) => {
   return (
-    <div className="w-full md:w-80 shrink-0 bg-gray-900 p-4 flex flex-col border-r border-gray-800 md:overflow-y-auto">
+    <div className="w-full md:w-80 shrink-0 bg-gray-900 p-4 flex flex-col border-r border-gray-800 overflow-y-auto md:overflow-visible max-h-60 md:max-h-none">
       <h2 className="text-lg font-semibold text-gray-200 mb-4">Game Idea</h2>
       <p className="text-sm text-gray-400 mb-4">
         Describe the game you want to create. Be as specific as you like!

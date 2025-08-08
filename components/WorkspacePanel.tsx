@@ -51,7 +51,7 @@ const TabButton: React.FC<{
 
 const WorkspacePanel: React.FC<WorkspacePanelProps> = ({ activeTab, setActiveTab, gameCode, onCodeChange }) => {
   return (
-    <div className="flex-1 bg-gray-800 flex flex-col">
+    <div className="flex-1 bg-gray-800 flex flex-col min-h-[50vh] md:min-h-0">
       <div className="flex items-center px-2 pt-2 bg-gray-900 border-b border-gray-700">
         <TabButton
           label="Preview"
