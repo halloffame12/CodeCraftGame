@@ -12,7 +12,7 @@ const AIAssistantPanel: React.FC<AIAssistantPanelProps> = ({ explanation, isLoad
   const baseClasses = "w-full md:w-80 shrink-0 bg-gray-900 p-4 border-l border-gray-800 flex flex-col";
   const heightClasses = isMobileFullHeight
     ? "h-full max-h-none overflow-y-auto"
-    : "overflow-y-auto md:overflow-visible max-h-56 md:max-h-none";
+    : "min-h-0 overflow-y-auto";
 
   return (
     <div className={`${baseClasses} ${heightClasses}`}>
