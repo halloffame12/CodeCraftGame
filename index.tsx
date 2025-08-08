@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { ClerkProvider } from '@clerk/clerk-react';
 import { enUS } from '@clerk/localizations';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import SignInPage from './components/SignIn';
 import SignUpPage from './components/SignUp';
 
@@ -33,6 +33,8 @@ root.render(
             <Routes>
               <Route path="/sign-in" element={<SignInPage />} />
               <Route path="/sign-up" element={<SignUpPage />} />
+              <Route path="/login" element={<Navigate to="/sign-in" replace />} />
+              <Route path="/register" element={<Navigate to="/sign-up" replace />} />
               <Route path="/*" element={<App />} />
             </Routes>
           </BrowserRouter>
