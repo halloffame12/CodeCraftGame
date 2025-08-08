@@ -5,11 +5,17 @@ import WandIcon from './icons/WandIcon';
 interface AIAssistantPanelProps {
   explanation: string;
   isLoading: boolean;
+  isMobileFullHeight?: boolean;
 }
 
-const AIAssistantPanel: React.FC<AIAssistantPanelProps> = ({ explanation, isLoading }) => {
+const AIAssistantPanel: React.FC<AIAssistantPanelProps> = ({ explanation, isLoading, isMobileFullHeight }) => {
+  const baseClasses = "w-full md:w-80 shrink-0 bg-gray-900 p-4 border-l border-gray-800 flex flex-col";
+  const heightClasses = isMobileFullHeight
+    ? "h-full max-h-none overflow-y-auto"
+    : "overflow-y-auto md:overflow-visible max-h-56 md:max-h-none";
+
   return (
-    <div className="w-full md:w-80 shrink-0 bg-gray-900 p-4 border-l border-gray-800 flex flex-col overflow-y-auto md:overflow-visible max-h-56 md:max-h-none">
+    <div className={`${baseClasses} ${heightClasses}`}>
       <div className="flex items-center gap-3 mb-4">
         <WandIcon className="w-6 h-6 text-purple-400" />
         <h2 className="text-lg font-semibold text-gray-200">AI Assistant</h2>

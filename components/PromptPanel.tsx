@@ -7,6 +7,7 @@ interface PromptPanelProps {
   setPrompt: (prompt: string) => void;
   onGenerate: () => void;
   isLoading: boolean;
+  isMobileFullHeight?: boolean;
 }
 
 const examplePrompts = [
@@ -17,9 +18,14 @@ const examplePrompts = [
   "A clicker game where you earn points",
 ];
 
-const PromptPanel: React.FC<PromptPanelProps> = ({ prompt, setPrompt, onGenerate, isLoading }) => {
+const PromptPanel: React.FC<PromptPanelProps> = ({ prompt, setPrompt, onGenerate, isLoading, isMobileFullHeight }) => {
+  const baseClasses = "w-full md:w-80 shrink-0 bg-gray-900 p-4 flex flex-col border-r border-gray-800";
+  const heightClasses = isMobileFullHeight
+    ? "h-full max-h-none overflow-y-auto"
+    : "overflow-y-auto md:overflow-visible max-h-60 md:max-h-none";
+
   return (
-    <div className="w-full md:w-80 shrink-0 bg-gray-900 p-4 flex flex-col border-r border-gray-800 overflow-y-auto md:overflow-visible max-h-60 md:max-h-none">
+    <div className={`${baseClasses} ${heightClasses}`}>
       <h2 className="text-lg font-semibold text-gray-200 mb-4">Game Idea</h2>
       <p className="text-sm text-gray-400 mb-4">
         Describe the game you want to create. Be as specific as you like!
