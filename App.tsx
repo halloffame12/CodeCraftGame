@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { GameCode, WorkspaceTab } from './types';
 import { generateGameCode } from './services/geminiService';
 import Header from './components/Header';
@@ -22,6 +22,36 @@ const App: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<WorkspaceTab>(WorkspaceTab.Preview);
   const [mobileSection, setMobileSection] = useState<'prompt' | 'workspace' | 'assistant'>('workspace');
+  const swipeStartX = useRef<number | null>(null);
+  const swipeEndX = useRef<number | null>(null);
+
+  const mobileSections: Array<'prompt' | 'workspace' | 'assistant'> = ['prompt', 'workspace', 'assistant'];
+  const goToSectionIndex = (index: number) => {
+    const clamped = Math.max(0, Math.min(mobileSections.length - 1, index));
+    setMobileSection(mobileSections[clamped]);
+  };
+  const handleTouchStart = (e: React.TouchEvent) => {
+    swipeStartX.current = e.touches[0].clientX;
+    swipeEndX.current = null;
+  };
+  const handleTouchMove = (e: React.TouchEvent) => {
+    swipeEndX.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = () => {
+    if (swipeStartX.current == null || swipeEndX.current == null) return;
+    const deltaX = swipeEndX.current - swipeStartX.current;
+    const threshold = 50; // px
+    if (Math.abs(deltaX) >= threshold) {
+      const currentIndex = mobileSections.indexOf(mobileSection);
+      if (deltaX < 0) {
+        goToSectionIndex(currentIndex + 1);
+      } else {
+        goToSectionIndex(currentIndex - 1);
+      }
+    }
+    swipeStartX.current = null;
+    swipeEndX.current = null;
+  };
 
   const handleSignIn = () => navigate('/sign-in');
   const handleSignUp = () => navigate('/sign-up');
@@ -128,7 +158,7 @@ const App: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row flex-1 min-h-0 overflow-hidden">
+      <div className="flex flex-col md:flex-row flex-1 min-h-0 overflow-hidden md:overflow-visible" onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
         <div className={`${mobileSection === 'prompt' ? 'block' : 'hidden'} md:block`}>
           <PromptPanel
             prompt={prompt}
@@ -137,13 +167,31 @@ const App: React.FC = () => {
             isLoading={isLoading}
           />
         </div>
-        <div className={`${mobileSection === 'workspace' ? 'flex min-h-0 flex-1' : 'hidden'} md:flex md:flex-1 min-h-0`}>
+        <div className={`${mobileSection === 'workspace' ? 'flex min-h-0 flex-1' : 'hidden'} md:flex md:flex-1 min-h-0 relative`}>
           <WorkspacePanel
             activeTab={activeTab}
             setActiveTab={setActiveTab}
             gameCode={gameCode}
             onCodeChange={handleCodeChange}
           />
+          {/* Floating controls on mobile while in Preview */}
+          {mobileSection === 'workspace' && (
+            <div className="md:hidden absolute bottom-4 right-4 flex gap-2">
+              <button
+                onClick={() => setMobileSection('prompt')}
+                className="px-3 py-2 rounded-md bg-gray-900/80 text-gray-100 border border-gray-700 backdrop-blur shadow"
+              >
+                Back
+              </button>
+              <button
+                onClick={handleExport}
+                disabled={!gameCode || isLoading}
+                className="px-3 py-2 rounded-md bg-indigo-600 text-white border border-indigo-500 shadow disabled:bg-gray-600 disabled:border-gray-600"
+              >
+                Export
+              </button>
+            </div>
+          )}
         </div>
         <div className={`${mobileSection === 'assistant' ? 'block' : 'hidden'} md:block`}>
           <AIAssistantPanel explanation={aiExplanation} isLoading={isLoading} />
