@@ -21,6 +21,7 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<WorkspaceTab>(WorkspaceTab.Preview);
+  const [mobileSection, setMobileSection] = useState<'prompt' | 'workspace' | 'assistant'>('workspace');
 
   const handleSignIn = () => navigate('/sign-in');
   const handleSignUp = () => navigate('/sign-up');
@@ -102,20 +103,49 @@ const App: React.FC = () => {
         isExportDisabled={!gameCode || isLoading}
         onLogout={signOut}
       />
+      {/* Mobile section switcher */}
+      <div className="md:hidden px-4 pb-2">
+        <div className="grid grid-cols-3 gap-2">
+          <button
+            className={`px-3 py-2 text-sm font-medium rounded-md border ${mobileSection === 'prompt' ? 'bg-gray-800 text-indigo-400 border-indigo-400' : 'bg-gray-900 text-gray-300 border-gray-700'}`}
+            onClick={() => setMobileSection('prompt')}
+          >
+            Prompt
+          </button>
+          <button
+            className={`px-3 py-2 text-sm font-medium rounded-md border ${mobileSection === 'workspace' ? 'bg-gray-800 text-indigo-400 border-indigo-400' : 'bg-gray-900 text-gray-300 border-gray-700'}`}
+            onClick={() => setMobileSection('workspace')}
+          >
+            Preview
+          </button>
+          <button
+            className={`px-3 py-2 text-sm font-medium rounded-md border ${mobileSection === 'assistant' ? 'bg-gray-800 text-indigo-400 border-indigo-400' : 'bg-gray-900 text-gray-300 border-gray-700'}`}
+            onClick={() => setMobileSection('assistant')}
+          >
+            Assistant
+          </button>
+        </div>
+      </div>
       <div className="flex flex-col md:flex-row flex-1 min-h-0 overflow-hidden">
-        <PromptPanel
-          prompt={prompt}
-          setPrompt={setPrompt}
-          onGenerate={handleGenerate}
-          isLoading={isLoading}
-        />
-        <WorkspacePanel
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          gameCode={gameCode}
-          onCodeChange={handleCodeChange}
-        />
-        <AIAssistantPanel explanation={aiExplanation} isLoading={isLoading} />
+        <div className={`${mobileSection === 'prompt' ? 'block' : 'hidden'} md:block`}>
+          <PromptPanel
+            prompt={prompt}
+            setPrompt={setPrompt}
+            onGenerate={handleGenerate}
+            isLoading={isLoading}
+          />
+        </div>
+        <div className={`${mobileSection === 'workspace' ? 'flex min-h-0 flex-1' : 'hidden'} md:flex md:flex-1 min-h-0`}>
+          <WorkspacePanel
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            gameCode={gameCode}
+            onCodeChange={handleCodeChange}
+          />
+        </div>
+        <div className={`${mobileSection === 'assistant' ? 'block' : 'hidden'} md:block`}>
+          <AIAssistantPanel explanation={aiExplanation} isLoading={isLoading} />
+        </div>
       </div>
       {error && (
         <div
