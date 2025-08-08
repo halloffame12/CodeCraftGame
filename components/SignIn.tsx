@@ -4,7 +4,7 @@ import './SignInSignUp.css';
 const SignInPage = () => {
     return (
         <div className="centered-full-height">
-            <SignIn routing="path" path="/sign-in" />
+            <SignIn routing="path" path="/sign-in" signUpUrl="/sign-up" />
         </div>
     );
 };

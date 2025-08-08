@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { ClerkProvider } from '@clerk/clerk-react';
+import { enUS } from '@clerk/localizations';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SignInPage from './components/SignIn';
 import SignUpPage from './components/SignUp';
@@ -15,14 +16,28 @@ if (!rootElement) {
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
-    <ClerkProvider publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/sign-in" element={<SignInPage />} />
-          <Route path="/sign-up" element={<SignUpPage />} />
-          <Route path="/*" element={<App />} />
-        </Routes>
-      </BrowserRouter>
-    </ClerkProvider>
+    {(() => {
+      const localization = {
+        ...enUS,
+        unstable__errors: {
+          ...(enUS as any).unstable__errors,
+          form_identifier_not_found: 'No account found. Please sign up to continue.',
+        },
+      };
+      return (
+        <ClerkProvider
+          publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}
+          localization={localization}
+        >
+          <BrowserRouter>
+            <Routes>
+              <Route path="/sign-in" element={<SignInPage />} />
+              <Route path="/sign-up" element={<SignUpPage />} />
+              <Route path="/*" element={<App />} />
+            </Routes>
+          </BrowserRouter>
+        </ClerkProvider>
+      );
+    })()}
   </React.StrictMode>
 );
