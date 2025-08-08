@@ -107,7 +107,7 @@ const App: React.FC = () => {
         onLogout={signOut}
       />
       <div className="flex flex-col md:flex-row flex-1 min-h-0 overflow-hidden">
-        <div className="hidden md:block">
+        <div className="hidden md:block md:min-h-0">
           <PromptPanel
             prompt={prompt}
             setPrompt={setPrompt}
@@ -121,7 +121,7 @@ const App: React.FC = () => {
           gameCode={gameCode}
           onCodeChange={handleCodeChange}
         />
-        <div className="hidden md:block">
+        <div className="hidden md:block md:min-h-0">
           <AIAssistantPanel explanation={aiExplanation} isLoading={isLoading} />
         </div>
       </div>
