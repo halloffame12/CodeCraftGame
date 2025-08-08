@@ -9,7 +9,7 @@ interface AIAssistantPanelProps {
 
 const AIAssistantPanel: React.FC<AIAssistantPanelProps> = ({ explanation, isLoading }) => {
   return (
-    <div className="w-full md:w-80 shrink-0 bg-gray-900 p-4 border-l border-gray-800 flex flex-col">
+    <div className="w-full md:w-80 shrink-0 bg-gray-900 p-4 border-l border-gray-800 flex flex-col overflow-y-auto md:overflow-visible max-h-56 md:max-h-none">
       <div className="flex items-center gap-3 mb-4">
         <WandIcon className="w-6 h-6 text-purple-400" />
         <h2 className="text-lg font-semibold text-gray-200">AI Assistant</h2>
