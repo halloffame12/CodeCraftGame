@@ -95,14 +95,16 @@ const App: React.FC = () => {
   // Main app UI for signed-in users
   return (
     <div className="h-screen w-screen bg-gray-950 text-gray-100 flex flex-col font-sans">
-      <div className="flex justify-end p-4">
+      <div className={`${mobileSection === 'workspace' ? 'hidden' : 'flex'} md:flex justify-end p-4`}>
         <UserButton afterSignOutUrl="/" />
       </div>
-      <Header
-        onExport={handleExport}
-        isExportDisabled={!gameCode || isLoading}
-        onLogout={signOut}
-      />
+      <div className={`${mobileSection === 'workspace' ? 'hidden' : 'block'} md:block`}>
+        <Header
+          onExport={handleExport}
+          isExportDisabled={!gameCode || isLoading}
+          onLogout={signOut}
+        />
+      </div>
       {/* Mobile section switcher */}
       <div className="md:hidden px-4 pb-2">
         <div className="grid grid-cols-3 gap-2">
