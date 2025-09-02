@@ -9,7 +9,7 @@ interface AIAssistantPanelProps {
 }
 
 const AIAssistantPanel: React.FC<AIAssistantPanelProps> = ({ explanation, isLoading, isMobileFullHeight }) => {
-  const baseClasses = "w-full md:w-80 shrink-0 bg-gray-900 p-4 border-l border-gray-800 flex flex-col";
+  const baseClasses = "w-full md:w-80 lg:w-96 shrink-0 bg-gray-900 p-4 border-l border-gray-800 flex flex-col";
   const heightClasses = isMobileFullHeight
     ? "h-full max-h-none overflow-y-auto"
     : "min-h-0 overflow-y-auto";
