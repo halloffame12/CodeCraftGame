@@ -98,16 +98,13 @@ const App: React.FC = () => {
   // Main app UI for signed-in users
   return (
     <div className="h-screen w-screen bg-gray-950 text-gray-100 flex flex-col font-sans">
-      <div className="flex justify-end p-4">
-        <UserButton afterSignOutUrl="/" />
-      </div>
       <Header
         onExport={handleExport}
         isExportDisabled={!gameCode || isLoading}
         onLogout={signOut}
       />
       <div className="flex flex-col md:flex-row flex-1 min-h-0 overflow-hidden">
-        <div className="hidden md:block md:min-h-0">
+        <div className="hidden md:block md:min-h-0 md:max-w-[24rem] lg:max-w-[28rem]">
           <PromptPanel
             prompt={prompt}
             setPrompt={setPrompt}
@@ -121,7 +118,7 @@ const App: React.FC = () => {
           gameCode={gameCode}
           onCodeChange={handleCodeChange}
         />
-        <div className="hidden md:block md:min-h-0">
+        <div className="hidden md:block md:min-h-0 md:max-w-[24rem] lg:max-w-[28rem]">
           <AIAssistantPanel explanation={aiExplanation} isLoading={isLoading} />
         </div>
       </div>

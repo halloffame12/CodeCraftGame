@@ -19,7 +19,7 @@ const examplePrompts = [
 ];
 
 const PromptPanel: React.FC<PromptPanelProps> = ({ prompt, setPrompt, onGenerate, isLoading, isMobileFullHeight }) => {
-  const baseClasses = "w-full md:w-80 shrink-0 bg-gray-900 p-4 flex flex-col border-r border-gray-800";
+  const baseClasses = "w-full md:w-80 lg:w-96 shrink-0 bg-gray-900 p-4 flex flex-col border-r border-gray-800";
   const heightClasses = isMobileFullHeight
     ? "h-full max-h-none overflow-y-auto"
     : "min-h-0 overflow-y-auto";

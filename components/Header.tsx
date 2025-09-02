@@ -12,7 +12,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onExport, isExportDisabled, onLogout }) => {
   return (
-    <header className="bg-gray-900 border-b border-gray-800 p-3 flex justify-between items-center shadow-md shrink-0">
+    <header className="bg-gray-900 border-b border-gray-800 p-3 flex justify-between items-center shadow-md shrink-0 sticky top-0 z-30">
       <div className="flex items-center gap-3">
         <SparklesIcon className="w-7 h-7 text-indigo-400" />
         <h1 className="text-xl md:text-2xl font-bold text-gray-50 tracking-wider">CodeCraft AI</h1>
