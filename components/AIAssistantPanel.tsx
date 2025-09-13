@@ -26,7 +26,7 @@ const AIAssistantPanel: React.FC<AIAssistantPanelProps> = ({ explanation, isLoad
           <p className="text-sm text-gray-300 whitespace-pre-wrap leading-relaxed">{explanation}</p>
         ) : (
           <div className="text-center text-gray-500 h-full flex flex-col justify-center">
-            <p>The AI will provide an explanation of the generated code here.</p>
+             <p>The AI will provide an explanation of the generated code here.</p>
           </div>
         )}
       </div>

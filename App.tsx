@@ -7,14 +7,9 @@ import PromptPanel from './components/PromptPanel';
 import WorkspacePanel from './components/WorkspacePanel';
 import AIAssistantPanel from './components/AIAssistantPanel';
 import LandingPage from './components/LandingPage';
-import { useNavigate } from 'react-router-dom';
-import { useUser, UserButton, useClerk } from '@clerk/clerk-react';
 
 const App: React.FC = () => {
-  const { isSignedIn, isLoaded } = useUser();
-  const navigate = useNavigate();
-  const { signOut } = useClerk();
-
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [prompt, setPrompt] = useState<string>('A classic Snake game where the player controls a snake to eat food and grow longer.');
   const [gameCode, setGameCode] = useState<GameCode | null>(null);
   const [aiExplanation, setAiExplanation] = useState<string>('');
@@ -22,8 +17,14 @@ const App: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<WorkspaceTab>(WorkspaceTab.Preview);
 
-  const handleSignIn = () => navigate('/sign-in');
-  const handleSignUp = () => navigate('/sign-up');
+  const handleLogin = () => setIsLoggedIn(true);
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    // Optionally reset state on logout
+    setGameCode(null);
+    setAiExplanation('');
+    setError(null);
+  };
 
   const handleGenerate = useCallback(async () => {
     if (!prompt || isLoading) return;
@@ -49,7 +50,7 @@ const App: React.FC = () => {
   const handleCodeChange = (newCode: GameCode) => {
     setGameCode(newCode);
   };
-
+  
   const handleExport = useCallback(() => {
     if (!gameCode) return;
     const { html, css, js, gameName } = gameCode;
@@ -83,31 +84,23 @@ const App: React.FC = () => {
     URL.revokeObjectURL(url);
   }, [gameCode]);
 
-  if (!isLoaded) {
-    return <div>Loading...</div>;
+  if (!isLoggedIn) {
+    return <LandingPage onLogin={handleLogin} />;
   }
 
-  if (!isSignedIn) {
-    return <LandingPage onSignIn={handleSignIn} onSignUp={handleSignUp} />;
-  }
-
-  // Main app UI for signed-in users
   return (
     <div className="h-screen w-screen bg-gray-950 text-gray-100 flex flex-col font-sans">
-      <div className="flex justify-end p-4">
-        <UserButton afterSignOutUrl="/" />
-      </div>
-      <Header
-        onExport={handleExport}
-        isExportDisabled={!gameCode || isLoading}
-        onLogout={signOut}
+      <Header 
+        onExport={handleExport} 
+        isExportDisabled={!gameCode || isLoading} 
+        onLogout={handleLogout} 
       />
       <div className="flex flex-col md:flex-row flex-1 overflow-y-auto md:overflow-hidden">
-        <PromptPanel
-          prompt={prompt}
-          setPrompt={setPrompt}
-          onGenerate={handleGenerate}
-          isLoading={isLoading}
+        <PromptPanel 
+          prompt={prompt} 
+          setPrompt={setPrompt} 
+          onGenerate={handleGenerate} 
+          isLoading={isLoading} 
         />
         <WorkspacePanel
           activeTab={activeTab}
@@ -118,13 +111,13 @@ const App: React.FC = () => {
         <AIAssistantPanel explanation={aiExplanation} isLoading={isLoading} />
       </div>
       {error && (
-        <div
+        <div 
           className="absolute bottom-4 right-4 bg-red-800 border border-red-600 text-white p-4 rounded-lg shadow-xl max-w-sm animate-pulse"
           role="alert"
           onClick={() => setError(null)}
         >
-          <p className="font-bold mb-1">Error Generating Game</p>
-          <p className="text-sm">{error}</p>
+            <p className="font-bold mb-1">Error Generating Game</p>
+            <p className="text-sm">{error}</p>
         </div>
       )}
     </div>

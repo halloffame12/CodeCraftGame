@@ -32,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({ onExport, isExportDisabled, onLogout })
           aria-label="Logout"
         >
           <LogoutIcon className="w-5 h-5" />
-          <span className="hidden sm:inline">Logout</span>
+           <span className="hidden sm:inline">Logout</span>
         </button>
       </div>
     </header>

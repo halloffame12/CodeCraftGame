@@ -31,19 +31,19 @@ const PromptPanel: React.FC<PromptPanelProps> = ({ prompt, setPrompt, onGenerate
         className="flex-grow bg-gray-800 border border-gray-700 rounded-md p-3 text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow resize-none"
         rows={8}
       />
-
+      
       <div className="mt-4">
         <h3 className="text-sm font-semibold text-gray-400 mb-2">Or try an example:</h3>
         <div className="flex flex-col gap-2">
-          {examplePrompts.map((p) => (
-            <button
-              key={p}
-              onClick={() => setPrompt(p)}
-              className="text-left text-sm text-indigo-400 hover:text-indigo-300 hover:bg-gray-800 p-2 rounded-md transition-colors"
-            >
-              {p}
-            </button>
-          ))}
+            {examplePrompts.map((p) => (
+                <button 
+                    key={p}
+                    onClick={() => setPrompt(p)}
+                    className="text-left text-sm text-indigo-400 hover:text-indigo-300 hover:bg-gray-800 p-2 rounded-md transition-colors"
+                >
+                    {p}
+                </button>
+            ))}
         </div>
       </div>
 
