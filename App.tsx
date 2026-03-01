@@ -2,8 +2,8 @@
 import React, { useState, useCallback } from 'react';
 import { GameCode, WorkspaceTab } from './types';
 import { generateGameCode } from './services/geminiService';
-import Header from './components/Header'
-import PromptPanel from './components/PromptPanel'
+import Header from './components/Header';
+import PromptPanel from './components/PromptPanel';
 import WorkspacePanel from './components/WorkspacePanel';
 import AIAssistantPanel from './components/AIAssistantPanel';
 import LandingPage from './components/LandingPage';
